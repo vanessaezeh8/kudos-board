@@ -28,4 +28,23 @@ const getBoards = async (req, res) => {
   }
 };
 
-export {getBoards};
+const getBoard = async (req, res) => {
+  try {
+    const boardId = parseInt(req.params.id);
+    const board = await prisma.board.findUnique({
+      where: { id: boardId },
+      include: { cards: true }
+    });
+    if (!board) {
+      return res.status(404).json({ message: 'Board not found' });
+    }
+    res.status(200).json(board);
+  } catch (error) {
+    console.error('Error getting board', error);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+ };
+
+export {
+  getBoards,
+  getBoard};
