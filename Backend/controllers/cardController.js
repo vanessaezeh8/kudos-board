@@ -46,8 +46,20 @@ const createCard = async (req, res) => {
         res.status(500).json({message: error.message});
     }
  };
+
+ const deleteCard = async (req, res) => {
+    try{
+        const cardId = parseInt(req.params.cardId);
+        const card = await prisma.card.delete({where: {id: cardId}});
+        res.json(card);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+ };
+
 export {
     getCardsByBoard,
     createCard,
-    upvoteCard
+    upvoteCard,
+    deleteCard
  };
