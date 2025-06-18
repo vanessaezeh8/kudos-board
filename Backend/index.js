@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import boardRoutes from './routes/boardRoutes.js';
+import cardRoutes from './routes/cardRoutes.js';  
 
 const app = express();
 const PORT = 3000;
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/boards', boardRoutes);
+app.use('/api/cards', cardRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
