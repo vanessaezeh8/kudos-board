@@ -45,6 +45,24 @@ const getBoard = async (req, res) => {
   }
  };
 
+ const createBoard = async (req, res) => {
+  try {
+    const {title, category,author} = req.body;
+    if (!title || !category ) {
+      return res.status(400).json({ message: 'Title and category are required' });
+    }
+    const board = await prisma.board.create({
+      data: {title, category,author},
+    });
+    res.status(201).json(board);
+  } catch (error) {
+    console.error('Error creating board', error);
+    res.status(500).json({ message: 'Something went wrong' });
+ }
+ };
+
 export {
   getBoards,
-  getBoard};
+  getBoard,
+  createBoard
+};
