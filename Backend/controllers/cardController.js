@@ -10,4 +10,29 @@ const getCardsByBoard = async (req, res) => {
     }
 };
 
-export {getCardsByBoard};
+const createCard = async (req, res) => {
+    try{
+        const { message, gifUrl, author, boardId } = req.body;
+
+
+        if(!message || !gifUrl || !boardId){
+            return res.status(400).json({message: "Missing required fields"});
+        }
+        const card = await prisma.card.create({
+            data: {
+                message,
+                gifUrl,
+                author,
+                boardId: parseInt(boardId)
+            }
+        });
+        res.json(card);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+ };
+
+export {
+    getCardsByBoard,
+    createCard
+ };
