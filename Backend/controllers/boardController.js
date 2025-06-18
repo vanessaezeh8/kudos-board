@@ -61,8 +61,20 @@ const getBoard = async (req, res) => {
  }
  };
 
+ const deleteBoard = async (req, res) => {
+  try {
+    const boardId = parseInt(req.params.id);
+    await prisma.board.delete({where: {id: boardId}});
+    res.status(200).json({ message: 'Board deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting board', error);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+ };
+
 export {
   getBoards,
   getBoard,
-  createBoard
+  createBoard,
+  deleteBoard
 };
