@@ -32,7 +32,22 @@ const createCard = async (req, res) => {
     }
  };
 
+ const upvoteCard = async (req, res) => {
+    try{
+        const cardId = parseInt(req.params.cardId);
+        const card = await prisma.card.update({
+            where: {id: cardId},
+            data: {
+                upvotes: {increment: 1}
+            }
+        });
+        res.json(card);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+ };
 export {
     getCardsByBoard,
-    createCard
+    createCard,
+    upvoteCard
  };
