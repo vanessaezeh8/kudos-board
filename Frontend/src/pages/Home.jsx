@@ -24,6 +24,10 @@ function Home() {
         console.error(error);
     }
 };
+const handleBoardDelete = (deletedId) => {
+    setBoards(boards.filter(board => board.id !== deletedId));
+};
+
 return (
     <div>
         <h1> Kudos Boards</h1>
@@ -43,7 +47,7 @@ return (
         <CreateBoardForm onBoardCreated = {fetchBoards}/>
         <div className="board-grid">
         {boards.map(board => (
-            <BoardCard key={board.id} board={board} />
+            <BoardCard key={board.id} board={board} onDelete={handleBoardDelete}/>
         ))}
         </div>
     </div>
