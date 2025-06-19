@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
+import Header from "../components/Header.jsx";
+import Footer from "../components/Footer.jsx";
 import BoardCard from "../components/BoardCard.jsx";
 import CreateBoardForm from "../components/createBoardForm.jsx";
+
 
 function Home() {
   const [boards, setBoards] = useState([]);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetchBoards();
@@ -24,18 +28,31 @@ function Home() {
         console.error(error);
     }
 };
+const handleClearSearch = () => {
+    setSearch('');
+    setCategory('All');
+    fetchBoards();
+};
+
 const handleBoardDelete = (deletedId) => {
     setBoards(boards.filter(board => board.id !== deletedId));
 };
 
 return (
     <div>
-        <h1> Kudos Boards</h1>
+        <Header />
+        <div className="banner">
+            <h2>Welcome to KudoBoard 🎉</h2>
+            <p>Celebrate and share kudos with your team</p>
+        </div>
         <div className="search-bar">
             <input type="text"
-            placeholder="Search..."
+            placeholder="Search boards..."
+            value={search}
             onChange={(e) => setSearch(e.target.value)}
             />
+            <button onClick={fetchBoards}>Search</button>
+            <button onClick={handleClearSearch}>Clear</button>
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="All">All</option>
             <option value="Recent">Recent</option>
@@ -43,13 +60,29 @@ return (
             <option value="Thank you">Thank you</option>
             <option value="Inspiration">Inspiration</option>
         </select>
+        <button onClick={() => setShowModal(true)} className="create-btn">
+            Create Board
+        </button>
         </div>
-        <CreateBoardForm onBoardCreated = {fetchBoards}/>
+        {showModal && (
+            <div className="modal-overlay" onClick={() => setShowModal(false)}>
+                <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                    <CreateBoardForm
+                        onBoardCreated={() => {
+                            fetchBoards();
+                            setShowModal(false);
+                        }}
+                    />
+                    <button onClick={() => setShowModal(false)} className="close-modal">X</button>
+                </div>
+            </div>
+        )}
         <div className="board-grid">
-        {boards.map(board => (
+        {boards.map((board) => (
             <BoardCard key={board.id} board={board} onDelete={handleBoardDelete}/>
         ))}
         </div>
+        <Footer />
     </div>
 );
 }
