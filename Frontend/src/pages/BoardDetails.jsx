@@ -18,7 +18,7 @@ const BoardDetails = () => {
         console.log("Fetching a board", boardId);
         boardId = Number(boardId);
         console.log(typeof boardId);
-        const response = await fetch(`http://localhost:3000/boards/${boardId}`);
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/boards/${boardId}`);
         console.log(response);
         const data = await response.json();
         setBoard(data);
@@ -46,7 +46,7 @@ const BoardDetails = () => {
   const handleCardDelete = async (cardId) => {
     console.log("Deleting cardId", cardId);
     try {
-      const response = await fetch(`http://localhost:3000/cards/${cardId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/cards/${cardId}`, {
         method: "DELETE",
       });
       if (response.ok) {
@@ -69,7 +69,7 @@ const BoardDetails = () => {
 
   const handlePin = async (cardId) => {
     try {
-      const response = await fetch(`http://localhost:3000/cards/${cardId}/pin`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/cards/${cardId}/pin`, {
         method: "PUT",
       });
       const updatedCard = await response.json();

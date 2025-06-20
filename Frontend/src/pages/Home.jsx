@@ -21,7 +21,7 @@ function Home() {
       if (category && category !== "All") query.append("category", category);
 
       const response = await fetch(
-        `http://localhost:3000/boards?${query.toString()}`
+        `${import.meta.env.VITE_BASE_URL}/boards?${query.toString()}`
       );
       console.log(response);
       const data = await response.json();

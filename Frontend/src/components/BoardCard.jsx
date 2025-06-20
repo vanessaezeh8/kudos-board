@@ -7,7 +7,7 @@ function BoardCard({ board, onDelete }) {
     );
     if (!confirmed) return;
     try {
-      await fetch(`http://localhost:3000/boards/${board.id}`, {
+      await fetch(`${import.meta.env.VITE_BASE_URL}/boards/${board.id}`, {
         method: "DELETE",
       });
       onDelete(board.id);
