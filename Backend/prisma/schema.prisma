@@ -9,7 +9,7 @@ datasource db {
 
 model Board {
   id          Int   @id @default(autoincrement())
-  title      String
+  title       String
   category    String
   author      String?
   cards       Card[]
@@ -19,10 +19,12 @@ model Board {
 model Card {
   id          Int   @id @default(autoincrement())
   message     String
-  gifurl      String
+  gifUrl      String
   author      String?
   upvotes     Int  @default(0)
   board       Board @relation(fields: [boardId], references: [id])
   boardId     Int
   createdAt   DateTime @default(now())
+  pinned      Boolean @default(false)
+  pinnedAt    DateTime?
 }

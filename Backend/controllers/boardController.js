@@ -7,10 +7,9 @@ const getBoards = async (req, res) => {
     if (sort === "recent") {
       boards = await prisma.board.findMany({
         orderBy: { createdAt: "desc" },
-        take: 6,
       });
     } else if (category) {
-      const boards = await prisma.board.findMany({
+      boards = await prisma.board.findMany({
         where: { category },
       });
     } else if (search) {
@@ -34,7 +33,9 @@ const getBoards = async (req, res) => {
 
 const getBoard = async (req, res) => {
   try {
-    const boardId = parseInt(req.params.id);
+    const boardId = parseInt(req.params.boardId);
+    console.log("Requested boardId:", boardId);
+
     const board = await prisma.board.findUnique({
       where: { id: boardId },
       include: { cards: true },
@@ -78,8 +79,4 @@ const deleteBoard = async (req, res) => {
   }
 };
 
-export {
-  getBoards,
-  getBoard,
-  createBoard,
-  deleteBoard };
+export { getBoards, getBoard, createBoard, deleteBoard };
