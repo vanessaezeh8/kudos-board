@@ -6,7 +6,7 @@ function CreateForm({ boardId, onCardCreated }) {
   const [gifQuery, setGifQuery] = useState("");
   const [gifResult, setGifResult] = useState([]);
   const [selectedGif, setSelectedGif] = useState("");
-  
+
 
   const handleGifSearch = async () => {
     const apikey = import.meta.env.VITE_GIPHY_API_KEY;
@@ -28,7 +28,7 @@ function CreateForm({ boardId, onCardCreated }) {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3000/cards", {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/cards`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
