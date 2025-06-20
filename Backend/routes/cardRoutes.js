@@ -1,15 +1,18 @@
-import express from 'express';
+import express from "express";
 import {
-    getCardsByBoard,
-    createCard,
-    upvoteCard,
-    deleteCard } from '../controllers/cardController.js';
+  getCardsByBoard,
+  createCard,
+  upvoteCard,
+  deleteCard,
+  tooglePinCard,
+} from "../controllers/cardController.js";
 
 const router = express.Router();
 
-router.get('/', getCardsByBoard);
-router.post('/', createCard);
-router.post('/upvote', upvoteCard);
-router.delete('/delete', deleteCard);
+router.get("/:boardId", getCardsByBoard);
+router.post("/", createCard);
+router.post("/:cardId/upvote", upvoteCard);
+router.delete("/:cardId", deleteCard);
+router.put("/:cardId/pin", tooglePinCard);
 
 export default router;
