@@ -7,6 +7,7 @@ const getBoards = async (req, res) => {
     if (sort === "recent") {
       boards = await prisma.board.findMany({
         orderBy: { createdAt: "desc" },
+        take: 6,
       });
     } else if (category) {
       boards = await prisma.board.findMany({
