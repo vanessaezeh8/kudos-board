@@ -45,7 +45,7 @@ function CreateBoardForm({ onBoardCreated }) {
       >
         <option value="">Select a category</option>
         <option value="Celebration">Celebration</option>
-        <option value="Thank You">Thank You</option>
+        <option value="ThankYou">Thank You</option>
         <option value="Inspiration">Inspiration</option>
       </select>
       <input

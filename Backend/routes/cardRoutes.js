@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/:boardId", getCardsByBoard);
 router.post("/", createCard);
-router.post("/:cardId/upvote", upvoteCard);
+router.put("/:cardId/upvote", upvoteCard);
 router.delete("/:cardId", deleteCard);
 router.put("/:cardId/pin", tooglePinCard);
 

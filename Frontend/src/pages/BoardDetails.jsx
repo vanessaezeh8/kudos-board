@@ -15,16 +15,13 @@ const BoardDetails = () => {
   useEffect(() => {
     const fetchBoard = async () => {
       try {
-        console.log("Fetching a board", boardId);
         boardId = Number(boardId);
-        console.log(typeof boardId);
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/boards/${boardId}`);
-        console.log(response);
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/boards/${boardId}`
+        );
         const data = await response.json();
         setBoard(data);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     fetchBoard();
   }, [boardId]);
@@ -44,11 +41,13 @@ const BoardDetails = () => {
   }, [board]);
 
   const handleCardDelete = async (cardId) => {
-    console.log("Deleting cardId", cardId);
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/cards/${cardId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/cards/${cardId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
         setBoard((prev) => ({
           ...prev,
@@ -69,9 +68,12 @@ const BoardDetails = () => {
 
   const handlePin = async (cardId) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/cards/${cardId}/pin`, {
-        method: "PUT",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/cards/${cardId}/pin`,
+        {
+          method: "PUT",
+        }
+      );
       const updatedCard = await response.json();
       setBoard((prev) => ({
         ...prev,
@@ -82,7 +84,23 @@ const BoardDetails = () => {
     }
   };
 
-
+  const handleUpvote = async (cardId) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/cards/${cardId}/upvote`,
+        {
+          method: "PUT",
+        }
+      );
+      const updatedCard = await response.json();
+      setBoard((prev) => ({
+        ...prev,
+        cards: prev.cards.map((c) => (c.id === cardId ? updatedCard : c)),
+      }));
+    } catch (error) {
+      console.error("Error upvoting", error);
+    }
+  };
 
   if (!board) return <p>Loading...</p>;
 
@@ -116,8 +134,8 @@ const BoardDetails = () => {
             <p>{card.message}</p>
             <p>{card.author}</p>
             <div className="card-actions">
-              <button onClick={() => setCount(count + 1)}>
-                Upvote:: {count}
+              <button onClick={() => handleUpvote(card.id)}>
+                Upvote: {card.upvotes}
               </button>
               <button onClick={() => handlePin(card.id)}>
                 {card.pinned ? "Unpin" : "Pin"}

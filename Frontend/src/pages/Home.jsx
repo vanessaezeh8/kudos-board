@@ -23,7 +23,6 @@ function Home() {
       const response = await fetch(
         `${import.meta.env.VITE_BASE_URL}/boards?${query.toString()}`
       );
-      console.log(response);
       const data = await response.json();
       setBoards(data);
     } catch (error) {
@@ -58,9 +57,9 @@ function Home() {
         <button onClick={handleClearSearch}>Clear</button>
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value="All">All</option>
-          <option value="Recent">Recent</option>
+          <option value="recent">Recent</option>
           <option value="Celebration">Celebration</option>
-          <option value="Thank you">Thank you</option>
+          <option value="ThankYou">Thank you</option>
           <option value="Inspiration">Inspiration</option>
         </select>
         <button onClick={() => setShowModal(true)} className="create-btn">

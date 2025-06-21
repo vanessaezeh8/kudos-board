@@ -7,7 +7,6 @@ function CreateForm({ boardId, onCardCreated }) {
   const [gifResult, setGifResult] = useState([]);
   const [selectedGif, setSelectedGif] = useState("");
 
-
   const handleGifSearch = async () => {
     const apikey = import.meta.env.VITE_GIPHY_API_KEY;
     try {
@@ -41,7 +40,6 @@ function CreateForm({ boardId, onCardCreated }) {
         }),
       });
       const newCard = await response.json();
-      console.log("New Card respone: ", newCard);
       onCardCreated(newCard);
       setMessage("");
       setAuthor("");
