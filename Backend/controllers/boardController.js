@@ -4,9 +4,10 @@ const getBoards = async (req, res) => {
   try {
     const { category, search, sort } = req.query;
     let boards;
-    if (sort === "recent") {
+    if (category === "recent") {
       boards = await prisma.board.findMany({
         orderBy: { createdAt: "desc" },
+        take: 6,
       });
     } else if (category) {
       boards = await prisma.board.findMany({
@@ -34,7 +35,6 @@ const getBoards = async (req, res) => {
 const getBoard = async (req, res) => {
   try {
     const boardId = parseInt(req.params.boardId);
-    console.log("Requested boardId:", boardId);
 
     const board = await prisma.board.findUnique({
       where: { id: boardId },

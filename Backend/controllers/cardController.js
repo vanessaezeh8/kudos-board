@@ -13,8 +13,6 @@ const getCardsByBoard = async (req, res) => {
 const createCard = async (req, res) => {
   try {
     const { message, gifUrl, author, boardId } = req.body;
-    console.log("Requested request body:", req.body);
-    console.log("Extracted gifUrl:", gifUrl);
     if (!message || !gifUrl || !boardId) {
       return res
         .status(400)
